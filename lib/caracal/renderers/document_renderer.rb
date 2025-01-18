@@ -84,12 +84,25 @@ module Caracal
                 xml['w'].shd(       { 'w:fill' => attrs[:bgcolor], 'w:val' => 'clear' })      unless attrs[:bgcolor].nil?
                 xml['w'].highlight( { 'w:val' => attrs[:highlight_color] })                   unless attrs[:highlight_color].nil?
                 xml['w'].vertAlign( { 'w:val' => attrs[:vertical_align] })                    unless attrs[:vertical_align].nil?
+
+                # Add strikethrough if present
+                xml['w'].strike({ 'w:val' => '1' }) if attrs[:strikethrough]
                 unless attrs[:font].nil?
                   f = attrs[:font]
                   xml['w'].rFonts( { 'w:ascii' => f, 'w:hAnsi' => f, 'w:eastAsia' => f, 'w:cs' => f })
                 end
               end
-              xml['w'].rtl({ 'w:val' => '0' })
+
+              # Add the language setting if present
+              if document.rtl
+                xml['w'].rtl({ 'w:val' => '1' })
+                xml['w'].lang({ 'w:bidi' => document.language }) if document.language
+              else
+                xml['w'].rtl({ 'w:val' => '0' })
+                xml['w'].lang({ 'w:lang' => document.language }) if document.language
+              end
+
+              # xml['w'].noProof
             end
           end
         end

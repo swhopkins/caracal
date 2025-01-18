@@ -36,6 +36,8 @@ require 'caracal/renderers/styles_renderer'
 
 module Caracal
   class Document
+    attr_accessor :language
+    attr_accessor :rtl
 
     #------------------------------------------------------
     # Configuration

@@ -19,6 +19,9 @@ module Caracal
           xml['w'].settings root_options do
             xml['w'].displayBackgroundShape({ 'w:val' => '1' })
             xml['w'].defaultTabStop({ 'w:val' => '720' })
+
+            # Add language setting if provided
+            xml['w'].lang({ 'w:val' => document.language }) if document.language
             xml['w'].compat do
               xml['w'].compatSetting({ 'w:val' => '14', 'w:name' => 'compatibilityMode', 'w:uri' => 'http://schemas.microsoft.com/office/word' })
             end
